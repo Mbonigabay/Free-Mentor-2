@@ -79,6 +79,24 @@ class userController {
         }
     }
 
+    static ViewAllMentor(req, res) {
+        const found = users.some(user => user.role_id == 2);
+        
+        if (found) {
+            const mentors = users.filter(user => user.role_id == 2);
+            
+            res.json({
+                status: 200,
+                data: {
+                    mentors
+                }
+            })
+        } else {
+            res.status(400).json({
+                msg: `No mentor registered`
+            })
+        }
+    }
 
 }
 
