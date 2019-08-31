@@ -1,9 +1,12 @@
 language: node_js
-
-node_js: "stable"
-
-install: npm install
-
-script: npm test
-
-after_script: npm run coveralls
+node_js:
+  - "stable"
+install:
+  - npm install
+cache:
+  directories:
+  - node_modules  
+script:
+  - npm test
+after_success:
+  - npm run coverage
