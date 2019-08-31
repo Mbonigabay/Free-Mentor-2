@@ -1,0 +1,15 @@
+const roles = [{
+    id: 1,
+    name: 'admin',
+},
+{
+    id: 2,
+    name: 'mentor',
+},
+{
+    id: 3,
+    name: 'user',
+}
+];
+
+module.exports = roles;
