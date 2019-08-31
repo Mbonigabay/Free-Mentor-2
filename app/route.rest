@@ -14,3 +14,13 @@ Content-Type: application/json
     "avatar": "",
     "role_id": "2"
 }
+
+# Sign in
+###
+POST  http://localhost:5000/api/auth/signin
+Content-Type: application/json
+
+{
+    "email": "bob@gmail.com",
+    "password": "123456"
+}

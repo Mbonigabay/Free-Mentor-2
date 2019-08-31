@@ -2,6 +2,8 @@
 import moment from 'moment';
 import users from '../model/User';
 import helper from '../middleware/helper';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 //user controller
 class userController {
@@ -44,6 +46,37 @@ class userController {
             status: 201,
             data: newUser,
         });
+    }
+
+    static Signin(req, res) {
+        const email = req.body.email;
+        const password = req.body.password;
+        const user = users.find(user => user.email === email);
+        if (!user) {
+            res.status(400).json({
+                status: '400',
+                message: 'wrong Email'
+            });
+        }
+
+        const hash = user.password;
+        const check = bcrypt.compareSync(password, hash);
+        if (!check) {
+            res.status(400).json({
+                status: '400',
+                message: 'wrong password'
+            });
+        } else {
+            jwt.sign({
+                user
+            }, 'secretkey', (err, token) => {
+                res.status(200).json({
+                    status: 'success',
+                    user,
+                    token
+                });
+            })
+        }
     }
 
 

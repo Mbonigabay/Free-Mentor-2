@@ -33,4 +33,23 @@ describe('User', () => {
 
   });
 
+  describe('Sign in', () => {
+    it('should be able to signin', (done) => {
+        const user = {
+          email: 'john@gmail.com',
+          password: '123456',
+        };
+        chai.request(app)
+          .post('/api/auth/signin')
+          .send(user)
+          .end((err, res) => {
+            chai.expect(res.statusCode).to.be.equal(200);
+            chai.expect(res.body.status).to.be.equal('success');
+            chai.expect(res.body).to.be.an('object');
+          });
+        done();
+      });
+
+  });
+
 });
