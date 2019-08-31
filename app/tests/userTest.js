@@ -21,7 +21,7 @@ describe('User', () => {
   describe('Sign up', () => {
     it('should be able to sign up', (done) => {
       chai.request(app)
-        .post('/api/auth/signup')
+        .post('/api/v1/auth/signup')
         .send(newUser)
         .end((err, res) => {
           chai.expect(res.statusCode).to.be.equal(200);
@@ -40,7 +40,7 @@ describe('User', () => {
           password: '123456',
         };
         chai.request(app)
-          .post('/api/auth/signin')
+          .post('/api/v1/auth/signin')
           .send(user)
           .end((err, res) => {
             chai.expect(res.statusCode).to.be.equal(200);
@@ -50,6 +50,17 @@ describe('User', () => {
         done();
       });
 
+  });
+
+  describe('View all mentor', () => {
+      it('should be able to view all mentor', (done) => {
+    chai.request(app)
+      .get('/api/v1/users/mentors')
+      .end((err, res) => {
+        chai.expect(res.statusCode).to.be.equal(200);
+      });
+    done();
+    });
   });
 
 });
