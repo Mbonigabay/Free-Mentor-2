@@ -8,8 +8,8 @@
     "dev": "nodemon --require @babel/register ./app/server.js"
   },
   "Dependencies": {
-    "mocha": "3.4.2",
-    "chai": "4.0.2"
+    "mocha": "^6.2.0",
+    "chai": "^4.2.0"
 },
   "repository": {
     "type": "git",

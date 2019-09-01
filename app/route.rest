@@ -31,7 +31,7 @@ GET http://localhost:5000/api/v1/mentors
 
 # Create a session
 ###
-POST  http://localhost:5000/api/v1/sessions
+dPOST  http://localhost:5000/api/v1/sessions
 Content-Type: application/json
 
 {
@@ -40,3 +40,11 @@ Content-Type: application/json
     "question": "What",
     "menteeEmail": ""
 }
+
+# Accept a Session
+###
+PATCH   http://localhost:5000/api/v1/sessions/1/accept
+
+# Reject a Session
+###
+PATCH   http://localhost:5000/api/v1/sessions/1/reject
