@@ -27,4 +27,16 @@ Content-Type: application/json
 
 # All mentor
 ###
-GET http://localhost:5000/api/v1/users/mentors 
+GET http://localhost:5000/api/v1/mentors 
+
+# Create a session
+###
+POST  http://localhost:5000/api/v1/sessions
+Content-Type: application/json
+
+{
+   "mentorId": 1,
+    "menteeId": 2,
+    "question": "What",
+    "menteeEmail": ""
+}
