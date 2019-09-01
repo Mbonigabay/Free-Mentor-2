@@ -25,9 +25,14 @@ Content-Type: application/json
     "password": "123456"
 }
 
-# All mentor
+# View all mentors
 ###
-GET http://localhost:5000/api/v1/mentors 
+GET http://localhost:5000/api/v1/mentors
+
+
+# View a mentor
+###
+GET http://localhost:5000/api/v1/mentors/1
 
 # Create a session
 ###
