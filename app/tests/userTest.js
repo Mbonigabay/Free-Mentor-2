@@ -35,27 +35,38 @@ describe('User', () => {
 
   describe('Sign in', () => {
     it('should be able to signin', (done) => {
-        const user = {
-          email: 'john@gmail.com',
-          password: '123456',
-        };
-        chai.request(app)
-          .post('/api/v1/auth/signin')
-          .send(user)
-          .end((err, res) => {
-            chai.expect(res.statusCode).to.be.equal(200);
-            chai.expect(res.body.status).to.be.equal('success');
-            chai.expect(res.body).to.be.an('object');
-          });
-        done();
-      });
+      const user = {
+        email: 'john@gmail.com',
+        password: '123456',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(200);
+          chai.expect(res.body.status).to.be.equal('success');
+          chai.expect(res.body).to.be.an('object');
+        });
+      done();
+    });
 
   });
 
-  describe('View all mentor', () => {
-      it('should be able to view all mentor', (done) => {
-    chai.request(app)
-      .get('/api/v1/mentors')
+  describe('View all mentors', () => {
+    it('should be able to view all mentor', (done) => {
+      chai.request(app)
+        .get('/api/v1/mentors')
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(200);
+        });
+      done();
+    });
+  });
+
+  describe('View a mentor', () => {
+    it('should be able to view a mentor', (done) => {
+      chai.request(app)
+      .get('/api/v1/mentors/1')
       .end((err, res) => {
         chai.expect(res.statusCode).to.be.equal(200);
       });
