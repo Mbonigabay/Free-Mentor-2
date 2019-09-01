@@ -55,7 +55,7 @@ describe('User', () => {
   describe('View all mentor', () => {
       it('should be able to view all mentor', (done) => {
     chai.request(app)
-      .get('/api/v1/users/mentors')
+      .get('/api/v1/mentors')
       .end((err, res) => {
         chai.expect(res.statusCode).to.be.equal(200);
       });

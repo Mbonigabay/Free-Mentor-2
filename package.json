@@ -7,6 +7,10 @@
     "test": "mocha --require @babel/register  app/tests/*.js --timeout 15000 --exit",
     "dev": "nodemon --require @babel/register ./app/server.js"
   },
+  "Dependencies": {
+    "mocha": "3.4.2",
+    "chai": "4.0.2"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mbonigabay/Free-Mentor-2.git"

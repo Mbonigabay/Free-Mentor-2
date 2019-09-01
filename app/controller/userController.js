@@ -48,6 +48,7 @@ class userController {
         });
     }
 
+    // Sign in function
     static Signin(req, res) {
         const email = req.body.email;
         const password = req.body.password;
@@ -79,6 +80,7 @@ class userController {
         }
     }
 
+    // View all mentor function
     static ViewAllMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
         
