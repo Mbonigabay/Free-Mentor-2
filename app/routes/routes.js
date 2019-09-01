@@ -10,5 +10,7 @@ router.post('/api/v1/auth/signin', usercontroller.Signin);
 router.get('/api/v1/mentors', usercontroller.ViewAllMentor);
 
 router.post('/api/v1/sessions', sessioncontroller.CreateSession);
+router.patch('/api/v1/sessions/:sessionId/accept', sessioncontroller.AcceptSession);
+router.patch('/api/v1/sessions/:sessionId/reject', sessioncontroller.RejectSession);
 
 export default router;
