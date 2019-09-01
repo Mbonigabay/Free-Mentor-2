@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "10.13.0"
+  },
   "scripts": {
     "test": "mocha --require @babel/register  app/tests/*.js --timeout 15000 --exit",
+    "start": "node  --require @babel/register ./app/server.js",
     "dev": "nodemon --require @babel/register ./app/server.js"
   },
   "Dependencies": {
