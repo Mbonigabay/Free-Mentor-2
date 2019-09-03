@@ -1,4 +1,4 @@
-# <a href="#"><img src="app/public/img/Capture2.PNG" title="FVCproductions" alt="FVCproductions" width="30%"></a>
+# <a href="#"><img src="app/public/img/Capture.PNG" title="FVCproductions" alt="FVCproductions" width="30%"></a>
 Free Mentors is a social initiative where accomplished professionals become role models to 
 young people to provide free mentorship sessions.
 
