@@ -1,4 +1,5 @@
 import sessions from '../model/Session';
+import jwt from 'jsonwebtoken';
 
 //session controller
 class sessionController {
