@@ -24,14 +24,23 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
     "bcrypt": "^3.0.6",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "coveralls": "^3.0.6",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^6.2.0",
     "moment": "^2.24.0",
-    "nodemon": "^1.19.1",
     "nyc": "^14.1.1"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "^18.0.1",
+    "@babel/runtime-corejs2": "^7.5.5",
+    "eslint": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react-hooks": "^2.0.1",
+    "nodemon": "^1.19.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0"
   }
 }

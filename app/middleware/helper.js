@@ -25,7 +25,6 @@ const helper = {
     return token;
   },
 
-  // Verify Token
   verifyToken(req, res, next) {
     // Get auth header value
     const bearerHeader = req.headers['authorization'];

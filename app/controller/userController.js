@@ -84,47 +84,62 @@ class userController {
     static ViewAllMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
 
-        if (found) {
-            const mentors = users.filter(user => user.role_id == 2);
+        jwt.verify(req.token, 'secretkey', (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                if (found) {
+                    const mentors = users.filter(user => user.role_id == 2);
 
-            res.json({
-                status: 200,
-                data: {
-                    mentors
+                    res.json({
+                        status: 200,
+                        data: {
+                            mentors
+                        }
+                    })
+                } else {
+                    res.status(400).json({
+                        msg: `No mentor registered`
+                    })
                 }
-            })
-        } else {
-            res.status(400).json({
-                msg: `No mentor registered`
-            })
-        }
+            }
+        })
+
     }
 
     // View a mentor
     static ViewAMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
-        
-        if (found) {
-            const check = users.some(user => user.id === parseInt(req.params.id) && user.role_id == 2)
-            if (check) {
-                const mentor = users.filter(user => user.id === parseInt(req.params.id) && user.role_id == 2)
-                res.json({
-                    status: 200,
-                    data: {
-                        mentor
-                    }
-                })
-            } else {
-                res.status(400).json({
-                    msg: `No mentor by that id`
-                })
-            }
 
-        } else {
-            res.status(400).json({
-                msg: `No mentor registered`
-            })
-        }
+        jwt.verify(req.token, 'secretkey', (err, authData) => {
+            if (err) {
+                res.sendStatus(403);
+            } else {
+                if (found) {
+                    const check = users.some(user => user.id === parseInt(req.params.id) && user.role_id == 2)
+                    if (check) {
+                        const mentor = users.filter(user => user.id === parseInt(req.params.id) && user.role_id == 2)
+                        res.json({
+                            status: 200,
+                            data: {
+                                mentor
+                            }
+                        })
+                    } else {
+                        res.status(400).json({
+                            msg: `No mentor by that id`
+                        })
+                    }
+
+                } else {
+                    res.status(400).json({
+                        msg: `No mentor registered`
+                    })
+                }
+            }
+        })
+
+
     }
 
 }
