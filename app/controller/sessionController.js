@@ -98,13 +98,15 @@ class sessionController {
      * @param res - response 
      */
     static RejectSession(req,res){
-        const found = sessions.some(session => session.sessionId === parseInt(req.params.sessionId))
+        const found = sessions.some(session => session.sessionId === parseInt(req.params.sessionId));
+        const session = sessions.find(session => session.sessionId === parseInt(req.params.sessionId));
 
         jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
           if (err) {
             res.sendStatus(403);
           } else {
             if (found) {
+              if(req.userData.user.id === session.mentorId){
               const updSession = req.body;
               sessions.forEach(session => {
                 if (session.sessionId === parseInt(req.params.sessionId)) {
@@ -123,7 +125,11 @@ class sessionController {
                     }
                   });
                 }
-              });
+              });} else {
+                res.status(400).json({
+                  msg: `NO access to this session`
+                });
+              }
             } else {
               res.status(400).json({
                 msg: `No session with the id of ${req.params.sessionId}`

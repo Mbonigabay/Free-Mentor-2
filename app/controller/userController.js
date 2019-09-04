@@ -105,9 +105,7 @@ class userController {
      */
     static ViewAllMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
-        console.log(req.userData.user.role_id);
-
-
+        
         jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
             if (err) {
                 res.sendStatus(403);
