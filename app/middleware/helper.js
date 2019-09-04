@@ -50,19 +50,37 @@ const helper = {
    * @param  next 
    */
   verifyToken(req, res, next) {
-    
+
     const bearerHeader = req.headers['authorization'];
 
     if (typeof bearerHeader !== 'undefined') {
-      
+
       const bearer = bearerHeader.split(' ');
       const bearerToken = bearer[1];
       req.token = bearerToken;
-      
+
       next();
     } else {
       res.sendStatus(403);
     }
-  }
+  },
+
+  failure(error, status){
+    const response = {
+      status,
+      error,
+    }
+      return response;
+  },
+
+  success(message, status, data){
+    const response ={
+      status,
+      message,
+      data,
+    }
+    return response;
+  },
+
 }
 module.exports = helper;

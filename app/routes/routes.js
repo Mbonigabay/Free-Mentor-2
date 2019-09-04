@@ -11,6 +11,7 @@ router.post('/api/v1/auth/signup', usercontroller.Signup);
 router.post('/api/v1/auth/signin', usercontroller.Signin);
 router.get('/api/v1/mentors', auth, helper.verifyToken, usercontroller.ViewAllMentor);
 router.get('/api/v1/mentors/:id', helper.verifyToken, usercontroller.ViewAMentor);
+router.patch('/api/v1/user/:id', auth, helper.verifyToken, usercontroller.ChangeRole);
 
 router.post('/api/v1/sessions', helper.verifyToken, sessioncontroller.CreateSession);
 router.patch('/api/v1/sessions/:sessionId/accept', auth, helper.verifyToken, sessioncontroller.AcceptSession);

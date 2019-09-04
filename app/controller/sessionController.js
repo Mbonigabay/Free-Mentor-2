@@ -28,7 +28,7 @@ class sessionController {
             } else {
               if (!newSession.question) {
                 return res.status(400).json({
-                  msg: 'Please You forgot to ask a question'
+                  message: 'Please You forgot to ask a question'
                 });
               }
             
@@ -72,19 +72,19 @@ class sessionController {
                   res.status(200).json({
                     status: 200,
                     data: {
-                        msg: 'session accepted',
+                        message: 'session accepted',
                         session,
                     }
                   });
                 }
               });} else {
                 res.status(400).json({
-                  msg: `NO access to this session`
+                  message: `NO access to this session`
                 });
               }
             } else {
               res.status(400).json({
-                msg: `No session with the id of ${req.params.sessionId}`
+                message: `No session with the id of ${req.params.sessionId}`
               });
             }
           }
@@ -120,19 +120,19 @@ class sessionController {
                   res.status(200).json({
                     status: 200,
                     data: {
-                        msg: 'session rejected',
+                        message: 'session rejected',
                         session,
                     }
                   });
                 }
               });} else {
                 res.status(400).json({
-                  msg: `NO access to this session`
+                  message: `NO access to this session`
                 });
               }
             } else {
               res.status(400).json({
-                msg: `No session with the id of ${req.params.sessionId}`
+                message: `No session with the id of ${req.params.sessionId}`
               });
             }
           }
