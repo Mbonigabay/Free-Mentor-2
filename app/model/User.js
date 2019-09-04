@@ -9,7 +9,7 @@ const users = [{
 	occupation: 'Graphic Design',
 	expertise: 'Graphic Design',
 	avatar: '',
-	role_id: '2'
+	role_id: '1'
 },
 {
     id: 2,
