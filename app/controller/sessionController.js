@@ -1,10 +1,16 @@
 import sessions from '../model/Session';
 import jwt from 'jsonwebtoken';
 
-//session controller
+/**
+ * Session controller
+ */
 class sessionController {
 
-    // Create a session function
+    /**
+     * Create a session
+     * @param req - request
+     * @param res - response
+     */
     static CreateSession(req, res){
         const newId = parseInt(sessions.length) + 1;
         const newSession = {
@@ -16,7 +22,7 @@ class sessionController {
             status: 'pending',
           };
 
-          jwt.verify(req.token, 'secretkey', (err, authData) => {
+          jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
             if (err) {
               res.sendStatus(403);
             } else {
@@ -38,15 +44,21 @@ class sessionController {
         
     }
 
-    // Accept a session
+    /**
+     * Accept a session
+     * @param req - request
+     * @param res - response 
+     */
     static AcceptSession(req, res){
-        const found = sessions.some(session => session.sessionId === parseInt(req.params.sessionId))
+        const found = sessions.some(session => session.sessionId === parseInt(req.params.sessionId));
+        const session = sessions.find(session => session.sessionId === parseInt(req.params.sessionId));
 
-        jwt.verify(req.token, 'secretkey', (err, authData) => {
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
           if (err) {
             res.sendStatus(403);
           } else {
             if (found) {
+              if(req.userData.user.id === session.mentorId){
               const updSession = req.body;
               sessions.forEach(session => {
                 if (session.sessionId === parseInt(req.params.sessionId)) {
@@ -65,7 +77,11 @@ class sessionController {
                     }
                   });
                 }
-              });
+              });} else {
+                res.status(400).json({
+                  msg: `NO access to this session`
+                });
+              }
             } else {
               res.status(400).json({
                 msg: `No session with the id of ${req.params.sessionId}`
@@ -76,11 +92,15 @@ class sessionController {
 
     }
 
-    // Decline a session
+    /**
+     * Decline a session
+     * @param req - request
+     * @param res - response 
+     */
     static RejectSession(req,res){
         const found = sessions.some(session => session.sessionId === parseInt(req.params.sessionId))
 
-        jwt.verify(req.token, 'secretkey', (err, authData) => {
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
           if (err) {
             res.sendStatus(403);
           } else {

@@ -1,13 +1,23 @@
 //import
-import moment from 'moment';
+import dotenv from 'dotenv';
 import users from '../model/User';
 import helper from '../middleware/helper';
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import userValidation from '../middleware/validation';
+import Joi from '@hapi/joi';
 
-//user controller
+
+dotenv.config();
+/**
+ * User controller
+ */
 class userController {
-    //signup function
+    /**
+     * signup function
+     * @param req - request
+     * @param res - response
+     */
     static Signup(req, res) {
         const newId = parseInt(users.length) + 1;
         const hashedPassword = helper.hashPassword(req.body.password);
@@ -34,29 +44,38 @@ class userController {
             role_id: req.body.role_id,
             token: token,
         };
-        if (!newUser.firstName || !newUser.email) {
+        const result = Joi.validate(newUser, userValidation);
+        if (result.error) {
             return res.status(400).json({
-                msg: 'Please include a first name and email'
+                status: 400,
+                error: `${result.error.details[0].message}`,
+            });
+        } else {
+            users.push(newUser);
+            res.json({
+                msg: 'User created successfully',
+                status: 201,
+                data: {
+                    token
+                },
             });
         }
-
-        users.push(newUser);
-        res.json({
-            msg: 'User created successfully',
-            status: 201,
-            data: newUser,
-        });
     }
 
-    // Sign in function
+    /**
+     * Sign in function
+     * @param req - request
+     * @param res - response
+     */
     static Signin(req, res) {
         const email = req.body.email;
         const password = req.body.password;
+
         const user = users.find(user => user.email === email);
         if (!user) {
             res.status(400).json({
                 status: '400',
-                message: 'wrong Email'
+                message: 'Wrong Email'
             });
         }
 
@@ -65,36 +84,44 @@ class userController {
         if (!check) {
             res.status(400).json({
                 status: '400',
-                message: 'wrong password'
+                message: 'Wrong password'
             });
         } else {
             jwt.sign({
-                user
-            }, 'secretkey', (err, token) => {
+                user,
+            }, process.env.JWT_KEY, (err, token) => {
                 res.status(200).json({
                     status: 'success',
-                    user,
                     token
                 });
             })
         }
     }
 
-    // View all mentors function
+    /**
+     * View all mentors function
+     * @param req - request
+     * @param res - response
+     */
     static ViewAllMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
+        console.log(req.userData.user.role_id);
 
-        jwt.verify(req.token, 'secretkey', (err, authData) => {
+
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
             if (err) {
                 res.sendStatus(403);
             } else {
                 if (found) {
                     const mentors = users.filter(user => user.role_id == 2);
-
+                    const mentorsRep = mentors;
+                    mentorsRep.forEach((mentorRep) => {
+                        delete mentorRep.password;
+                    });
                     res.json({
                         status: 200,
                         data: {
-                            mentors
+                            mentorsRep
                         }
                     })
                 } else {
@@ -107,11 +134,15 @@ class userController {
 
     }
 
-    // View a mentor
+    /**
+     * View a mentor
+     * @param req - request
+     * @param res - response
+     */
     static ViewAMentor(req, res) {
         const found = users.some(user => user.role_id == 2);
 
-        jwt.verify(req.token, 'secretkey', (err, authData) => {
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
             if (err) {
                 res.sendStatus(403);
             } else {
