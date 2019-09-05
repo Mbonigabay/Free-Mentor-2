@@ -28,6 +28,7 @@ class userController {
             const error = helper.failure('Email Taken', 400);
             return res.status(400).json(error);
         }
+        
         const newUser = {
             id: newId,
             firstName: req.body.firstName,
@@ -64,8 +65,7 @@ class userController {
         const email = req.body.email;
         const password = req.body.password;
 
-        if(req.body.email == null || req.body.password == null)
-        {
+        if (req.body.email == null || req.body.password == null) {
             const error = helper.failure('Fill all fields', 400);
             return res.status(400).json(error);
         }
@@ -112,9 +112,9 @@ class userController {
                     mentorsRep.forEach((mentorRep) => {
                         delete mentorRep.password;
                     });
-                    const result = helper.success('success', 200, {
+                    const result = helper.success('success', 200,
                         mentorsRep
-                    })
+                    )
                     return res.status(200).json(result);
 
                 } else {
@@ -146,9 +146,9 @@ class userController {
                         mentorsRep.forEach((mentorRep) => {
                             delete mentorRep.password;
                         });
-                        const result = helper.success('success', 200, {
+                        const result = helper.success('success', 200,
                             mentorsRep
-                        })
+                        )
                         return res.status(200).json(result);
                     } else {
                         const error = helper.failure(`No mentor by that id`, 400)
@@ -173,67 +173,72 @@ class userController {
      */
     static ChangeRole(req, res) {
         jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-        if (req.userData.user.role_id == 1) {
-            const found = users.some(user => user.id === parseInt(req.params.id));
-            if (found) {
-                const user = users.find(user => user.id === parseInt(req.params.id));
-                if (user.role_id == 3) {
-                    const updUser = req.body;
-                    users.forEach(user => {
-                        if (user.id === parseInt(req.params.id)) {
-                            user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
-                            user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
-                            user.email = updUser.email ? updUser.email : user.email;
-                            user.password = updUser.password ? updUser.password : user.password;
-                            user.address = updUser.address ? updUser.address : user.address;
-                            user.bio = updUser.bio ? updUser.bio : user.bio;
-                            user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
-                            user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
-                            user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
-                            user.role_id = "2";
+            if (req.userData.user.role_id == 1) {
+                const found = users.some(user => user.id === parseInt(req.params.id));
+                if (found) {
+                    const user = users.find(user => user.id === parseInt(req.params.id));
+                    if (user.role_id == 3) {
+                        const updUser = req.body;
+                        users.forEach(user => {
+                            if (user.id === parseInt(req.params.id)) {
+                                user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
+                                user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
+                                user.email = updUser.email ? updUser.email : user.email;
+                                user.password = updUser.password ? updUser.password : user.password;
+                                user.address = updUser.address ? updUser.address : user.address;
+                                user.bio = updUser.bio ? updUser.bio : user.bio;
+                                user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
+                                user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
+                                user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
+                                user.role_id = "2";
 
-                            const result = helper.success('User changed to mentor', 200, {
-                                user
-                            })
-                            return res.status(200).json(result);
+                                const userRep = user;
+                                delete userRep.password;
+                              
+                                const result = helper.success('User changed to mentor', 200,
+                                    userRep
+                                )
+                                return res.status(200).json(result);
 
-                        }
-                    });
-                } else if (user.role_id == 2) {
-                    const updUser = req.body;
-                    users.forEach(user => {
-                        if (user.id === parseInt(req.params.id)) {
-                            user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
-                            user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
-                            user.email = updUser.email ? updUser.email : user.email;
-                            user.password = updUser.password ? updUser.password : user.password;
-                            user.address = updUser.address ? updUser.address : user.address;
-                            user.bio = updUser.bio ? updUser.bio : user.bio;
-                            user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
-                            user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
-                            user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
-                            user.role_id = "3";
+                            }
+                        });
+                    } else if (user.role_id == 2) {
+                        const updUser = req.body;
+                        users.forEach(user => {
+                            if (user.id === parseInt(req.params.id)) {
+                                user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
+                                user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
+                                user.email = updUser.email ? updUser.email : user.email;
+                                user.password = updUser.password ? updUser.password : user.password;
+                                user.address = updUser.address ? updUser.address : user.address;
+                                user.bio = updUser.bio ? updUser.bio : user.bio;
+                                user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
+                                user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
+                                user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
+                                user.role_id = "3";
 
-                            const result = helper.success('Mentor changed to user', 201, {
-                                user
-                            })
-                            return res.status(201).json(result);
 
-                        }
-                    });
+                                const userRep = user;
+                                delete userRep.password;
+
+                                const result = helper.success('Mentor changed to user', 201, user)
+                                return res.status(201).json(result);
+
+                            }
+                        });
+                    } else {
+                        const error = helper.failure('This an Admin', 400)
+                        return res.status(400).json(error);
+                    }
                 } else {
-                    const error = helper.failure('This an Admin', 400)
+                    const error = helper.failure(`No user with the id of ${req.params.id}`, 400)
                     return res.status(400).json(error);
                 }
             } else {
-                const error = helper.failure(`No user with the id of ${req.params.id}`, 400)
+                const error = helper.failure('no access', 400);
                 return res.status(400).json(error);
             }
-        } else {
-            const error = helper.failure('no access', 400);
-            return res.status(400).json(error);
-        }
-    });
+        });
     }
 
 }
