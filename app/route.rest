@@ -4,31 +4,14 @@ Content-Type: application/json
 
 {
    "firstName": "Yusuf",
-    "lastName": "Mboni",
-    "email": "yu@gmail.com",
+    "lastName": "gdshgdsa",
+    "email": "yus@gmail.com",
     "password": "123456",
     "address": "kicukiro",
     "bio": "tokdddd",
     "occupation": "Fashion Design",
     "expertise": "Fashion Design",
     "avatar": "sssss",
-    "role_id": "3"
-}
-
-###
-POST https://free-mentor-four.herokuapp.com/api/v1/auth/signup
-Content-Type: application/json
-
-{
-   "firstName": "Yusuf",
-    "lastName": "Mboni",
-    "email": "Mbonigabay@gmail.com",
-    "password": "123456",
-    "address": "kicukiro",
-    "bio": "",
-    "occupation": "Fashion Design",
-    "expertise": "Fashion Design",
-    "avatar": "",
     "role_id": "2"
 }
 
@@ -38,7 +21,7 @@ POST  http://localhost:5000/api/v1/auth/signin
 Content-Type: application/json
 
 {
-    "email": "bob@gmail.com",
+    "email": "shannon@gmail.com",
     "password": "123456"
 }
 
@@ -55,16 +38,16 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlzdUBnb
 # Change role
 ###
 PATCH  http://localhost:5000/api/v1/user/3
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdE5hbWUiOiJCb2IiLCJsYXN0TmFtZSI6IldpbGxpYW1zIiwiZW1haWwiOiJib2JAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoiTnlhcnVnZW5nZSIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJTb2Z0d2FyZSBFbmdpbmVlcmluZyIsImV4cGVydGlzZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIiwiYXZhdGFyIjoiIiwicm9sZV9pZCI6IjIifSwiaWF0IjoxNTY3Njc0NTQwfQ.q8N2P73vvQCLpBFYxGbb24HCPatitxXac88VVFy5qxo
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJKb2huIiwibGFzdE5hbWUiOiJEb2UiLCJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoia2ljdWtpcm8iLCJiaW8iOiIiLCJvY2N1cGF0aW9uIjoiR3JhcGhpYyBEZXNpZ24iLCJleHBlcnRpc2UiOiJHcmFwaGljIERlc2lnbiIsImF2YXRhciI6IiIsInJvbGVfaWQiOiIxIn0sImlhdCI6MTU2NzY3OTc0NH0.zlSZKBeBwyaEwZvtBwF10sPLTS7cm0mThOROW4qgGSo
 
 # Create a session
 ###
 POST  http://localhost:5000/api/v1/sessions
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdE5hbWUiOiJCb2IiLCJsYXN0TmFtZSI6IldpbGxpYW1zIiwiZW1haWwiOiJib2JAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoiTnlhcnVnZW5nZSIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJTb2Z0d2FyZSBFbmdpbmVlcmluZyIsImV4cGVydGlzZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIiwiYXZhdGFyIjoiIiwicm9sZV9pZCI6IjMifSwiaWF0IjoxNTY3Njc0MzczfQ.LaCqOCKobBdVQeFbCwVtafrKpv-xhiHlrgfFxm-hY1I
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJmaXJzdE5hbWUiOiJTaGFubm9uIiwibGFzdE5hbWUiOiJKYWNrc29uIiwiZW1haWwiOiJzaGFubm9uQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJExSTGRvU3NpVkc3Q2xmb1MvL1p5NGUva0Z0blR6WEhxYjBmb0Yya3NMY21HcEZHV2YvY0ZPIiwiYWRkcmVzcyI6Ikdhc2FibyIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJQYWludGVyIiwiZXhwZXJ0aXNlIjoiUGFpbnRlciIsImF2YXRhciI6IiIsInJvbGVfaWQiOiIzIn0sImlhdCI6MTU2NzY4NTM2OX0.oweyt1rn24esS00GaBK-4TB4U3WR-y7fvbrwlQ4MwJo
 
 {
-   "mentorId": 1,
+   "mentorId": 3,
     "menteeId": 2,
     "question": "What",
     "menteeEmail": ""
@@ -72,7 +55,7 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyL
 
 # Accept a Session
 ###
-PATCH   http://localhost:5000/api/v1/sessions/1/accept
+PATCH   http://localhost:5000/api/v1/sessions/3/accept
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdE5hbWUiOiJCb2IiLCJsYXN0TmFtZSI6IldpbGxpYW1zIiwiZW1haWwiOiJib2JAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoiTnlhcnVnZW5nZSIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJTb2Z0d2FyZSBFbmdpbmVlcmluZyIsImV4cGVydGlzZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIiwiYXZhdGFyIjoiIiwicm9sZV9pZCI6IjMifSwiaWF0IjoxNTY3Njc0MzczfQ.LaCqOCKobBdVQeFbCwVtafrKpv-xhiHlrgfFxm-hY1I
 
 # Reject a Session

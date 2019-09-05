@@ -27,7 +27,6 @@ class userController {
         if (checkEmail) {
             const error = helper.failure('Email Taken', 400);
             return res.status(400).json(error);
-
         }
         const newUser = {
             id: newId,
@@ -65,9 +64,15 @@ class userController {
         const email = req.body.email;
         const password = req.body.password;
 
+        if(req.body.email == null || req.body.password == null)
+        {
+            const error = helper.failure('Fill all fields', 400);
+            return res.status(400).json(error);
+        }
+
         const user = users.find(user => user.email === email);
         if (!user) {
-            const error = helper.failure('Wrong Email', 400);
+            const error = helper.failure('Invalid email or password', 400);
             return res.status(400).json(error);
 
         }
@@ -75,7 +80,7 @@ class userController {
         const hash = user.password;
         const check = bcrypt.compareSync(password, hash);
         if (!check) {
-            const error = helper.failure('Wrong password', 400)
+            const error = helper.failure('Invalid email or password', 400)
             return res.status(400).json(error);
         } else {
             jwt.sign({
@@ -187,10 +192,10 @@ class userController {
                             user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
                             user.role_id = "2";
 
-                            const result = helper.success('User changed to mentor', 201, {
+                            const result = helper.success('User changed to mentor', 200, {
                                 user
                             })
-                            return res.status(201).json(result);
+                            return res.status(200).json(result);
 
                         }
                     });
@@ -225,7 +230,7 @@ class userController {
                 return res.status(400).json(error);
             }
         } else {
-            const error = helper.failure('No access', 400);
+            const error = helper.failure('no access', 400);
             return res.status(400).json(error);
         }
     });

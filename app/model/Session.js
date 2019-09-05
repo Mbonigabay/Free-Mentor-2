@@ -17,8 +17,8 @@ const sessions = [{
 },
 {
     sessionId: 3,
-	mentorId: 1,
-	menteeId: 2,
+	mentorId: 2,
+	menteeId: 1,
 	question: "",
 	menteeEmail: "",
 	status: "",
