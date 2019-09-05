@@ -75,19 +75,16 @@ class userController {
         const hash = user.password;
         const check = bcrypt.compareSync(password, hash);
         if (!check) {
-            res.status(400).json({
-                status: 400,
-                message: 'Wrong password'
-            });
+            const error = helper.failure('Wrong password', 400)
+            return res.status(400).json(error);
         } else {
             jwt.sign({
                 user,
             }, process.env.JWT_KEY, (err, token) => {
-                res.status(200).json({
-                    status: 200,
-                    message: 'Success',
+                const result = helper.success('Success', 200, {
                     token
-                });
+                })
+                return res.status(200).json(result);
             })
         }
     }
@@ -110,16 +107,14 @@ class userController {
                     mentorsRep.forEach((mentorRep) => {
                         delete mentorRep.password;
                     });
-                    res.json({
-                        status: 200,
-                        data: {
-                            mentorsRep
-                        }
+                    const result = helper.success('success', 200, {
+                        mentorsRep
                     })
+                    return res.status(200).json(result);
+
                 } else {
-                    res.status(400).json({
-                        message: `No mentor registered`
-                    })
+                    const error = helper.failure('No mentor registered', 400)
+                    return res.status(400).json(error);
                 }
             }
         })
@@ -146,16 +141,13 @@ class userController {
                         mentorsRep.forEach((mentorRep) => {
                             delete mentorRep.password;
                         });
-                        res.json({
-                            status: 200,
-                            data: {
-                                mentorsRep
-                            }
+                        const result = helper.success('success', 200, {
+                            mentorsRep
                         })
+                        return res.status(200).json(result);
                     } else {
-                        res.status(400).json({
-                            error: `No mentor by that id`
-                        })
+                        const error = helper.failure(`No mentor by that id`, 400)
+                        return res.status(400).json(error);
                     }
 
                 } else {
@@ -175,6 +167,7 @@ class userController {
      * @param res - response
      */
     static ChangeRole(req, res) {
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
         if (req.userData.user.role_id == 1) {
             const found = users.some(user => user.id === parseInt(req.params.id));
             if (found) {
@@ -194,13 +187,11 @@ class userController {
                             user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
                             user.role_id = "2";
 
-                            res.json({
-                                status: 201,
-                                data: {
-                                    msg: 'User changed to mentor',
-                                    user
-                                }
-                            });
+                            const result = helper.success('User changed to mentor', 201, {
+                                user
+                            })
+                            return res.status(201).json(result);
+
                         }
                     });
                 } else if (user.role_id == 2) {
@@ -218,32 +209,26 @@ class userController {
                             user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
                             user.role_id = "3";
 
-                            res.json({
-                                status: 201,
-                                data: {
-                                    msg: 'Mentor changed to user',
-                                    user
-                                }
-                            });
+                            const result = helper.success('Mentor changed to user', 201, {
+                                user
+                            })
+                            return res.status(201).json(result);
+
                         }
                     });
                 } else {
-                    res.json({
-                        status: 400,
-                        data: {
-                            msg: 'This an Admin',
-                        }
-                    });
+                    const error = helper.failure('This an Admin', 400)
+                    return res.status(400).json(error);
                 }
             } else {
-                res.status(400).json({
-                    msg: `No user with the id of ${req.params.id}`
-                });
+                const error = helper.failure(`No user with the id of ${req.params.id}`, 400)
+                return res.status(400).json(error);
             }
         } else {
             const error = helper.failure('No access', 400);
             return res.status(400).json(error);
         }
+    });
     }
 
 }
