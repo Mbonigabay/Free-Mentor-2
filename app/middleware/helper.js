@@ -37,7 +37,7 @@ const helper = {
     const token = jwt.sign({
       email,
       password
-    }, 'newUser', {
+    }, process.env.JWT_KEY, {
       expiresIn: '7d'
     });
     return token;

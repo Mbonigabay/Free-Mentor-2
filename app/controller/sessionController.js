@@ -1,4 +1,5 @@
 import sessions from '../model/Session';
+import users from '../model/User';
 import jwt from 'jsonwebtoken';
 
 /**
@@ -14,16 +15,18 @@ class sessionController {
     static CreateSession(req, res){
         const newId = parseInt(sessions.length) + 1;
         const newSession = {
-            sessionId: newId,
-            mentorId: req.body.mentorId,
-            menteeId: req.body.menteeId,
-            question: req.body.question,
-            menteeEmail: req.body.menteeEmail,
-            status: 'pending',
-          };
-
-          jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-            console.log(err);
+          sessionId: newId,
+          mentorId: req.body.mentorId,
+          menteeId: req.body.menteeId,
+          question: req.body.question,
+          menteeEmail: req.body.menteeEmail,
+          status: 'pending',
+        };
+        
+        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
+          const findUser = users.find(user => user.email === authData.user.email);
+          console.findUser;
+          console.log();
             if (err) {
               res.sendStatus(403);
             } else {
@@ -32,7 +35,7 @@ class sessionController {
                   message: 'Please You forgot to ask a question'
                 });
               }
-            
+            if(findUser.role_id == 3){
               sessions.push(newSession);
               res.json({
                 status: 200,
@@ -40,6 +43,10 @@ class sessionController {
                   newSession,
                 }
               });
+            }else{
+              res.json({status: 400,
+              message: 'wapi'})
+            }
             }
           })
         

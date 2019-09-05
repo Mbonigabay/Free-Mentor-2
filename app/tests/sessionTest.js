@@ -17,8 +17,8 @@ describe('Session', () => {
     describe('Create a session', () => {
         it('should be able to create session', (done) => {
             chai.request(app)
-                .post('/api/v1/sessions')
                 .set('Authorization', token)
+                .post('/api/v1/sessions')
                 .send(newSession)
                 .end((err, res) => {
                     chai.expect(res.statusCode).to.be.equal(200);
