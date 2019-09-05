@@ -49,8 +49,8 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozL
 {
    "mentorId": 3,
     "menteeId": 2,
-    "question": "What",
-    "menteeEmail": ""
+    "question": "What ARE YOU",
+    "menteeEmail": "yusuf@gmail.com"
 }
 
 # Accept a Session
