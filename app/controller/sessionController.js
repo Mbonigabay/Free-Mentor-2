@@ -1,6 +1,7 @@
 import sessions from '../model/Session';
 import users from '../model/User';
 import jwt from 'jsonwebtoken';
+import helper from '../middleware/helper';
 
 /**
  * Session controller
@@ -25,27 +26,21 @@ class sessionController {
         
         jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
           const findUser = users.find(user => user.email === authData.user.email);
-          console.findUser;
-          console.log();
+        
             if (err) {
               res.sendStatus(403);
             } else {
               if (!newSession.question) {
-                return res.status(400).json({
-                  message: 'Please You forgot to ask a question'
-                });
+                const error = helper.failure('Please You forgot to ask a question', 400)
+                return res.status(400).json(error);
               }
-            if(findUser.role_id == 3){
+            if(findUser.role_id != 1){
               sessions.push(newSession);
-              res.json({
-                status: 200,
-                data: {
-                  newSession,
-                }
-              });
+              const result = helper.success('Session created successfully', 200, {newSession})
+              return res.status(200).json(result);
             }else{
-              res.json({status: 400,
-              message: 'wapi'})
+              const error = helper.failure('You are an admin', 400)
+                return res.status(400).json(error);
             }
             }
           })
@@ -66,34 +61,30 @@ class sessionController {
             res.sendStatus(403);
           } else {
             if (found) {
+              console.log(req.userData.user.id);
               if(req.userData.user.id === session.mentorId){
               const updSession = req.body;
               sessions.forEach(session => {
                 if (session.sessionId === parseInt(req.params.sessionId)) {
                   session.sessionId = updSession.sessionId ? updSession.sessionId : session.sessionId;
                   session.mentorId = updSession.mentorId ? updSession.mentorId : session.mentorId;
-                  session.menteeId = updSession.menteeId ? updSession.menteeId : session.menteeId;
+                  session.m0enteeId = updSession.menteeId ? updSession.menteeId : session.menteeId;
                   session.question = updSession.question ? updSession.question : session.question;
                   session.menteeEmail = updSession.menteeEmail ? updSession.menteeEmail : session.menteeEmail;
                   session.status = "accepted";
           
-                  res.status(200).json({
-                    status: 200,
-                    data: {
-                        message: 'session accepted',
-                        session,
-                    }
-                  });
+                  const result = helper.success('session accepted', 200, {session})
+              return res.status(200).json(result);
+                 
                 }
               });} else {
-                res.status(400).json({
-                  message: `NO access to this session`
-                });
+                const result = helper.failure(`no access to this session`, 400)
+              return res.status(400).json(result);
+                
               }
             } else {
-              res.status(400).json({
-                message: `No session with the id of ${req.params.sessionId}`
-              });
+              const result = helper.failure(`no session with the id of ${req.params.sessionId}`, 400)
+              return res.status(400).json(result);
             }
           }
         })

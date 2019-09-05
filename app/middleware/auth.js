@@ -12,7 +12,10 @@ const auth = (req, res, next) => {
     req.token = bearerToken;
     jwt.verify(req.token, process.env.JWT_KEY, (error, data) => {
       if (error) {
-        throw new Error(`Authentication failed ${error}`);
+        res.status(401).json({
+          status: 401,
+          error: 'invalid token'
+        })
       } else {
         req.userData = data;
       }

@@ -52,29 +52,34 @@ const helper = {
   verifyToken(req, res, next) {
 
     const bearerHeader = req.headers['authorization'];
+    try {
+      if (typeof bearerHeader !== 'undefined') {
 
-    if (typeof bearerHeader !== 'undefined') {
-
-      const bearer = bearerHeader.split(' ');
-      const bearerToken = bearer[1];
-      req.token = bearerToken;
-
-      next();
-    } else {
-      res.sendStatus(403);
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+  
+        next();
+      } else {
+        res.sendStatus(403);
+      }
+    } catch (error) {
+      const result = this.failure('no token detected', 400);
+      res.status(400).json(result);
     }
+    
   },
 
-  failure(error, status){
+  failure(error, status) {
     const response = {
       status,
       error,
     }
-      return response;
+    return response;
   },
 
-  success(message, status, data){
-    const response ={
+  success(message, status, data) {
+    const response = {
       status,
       message,
       data,
