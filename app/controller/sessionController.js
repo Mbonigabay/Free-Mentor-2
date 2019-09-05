@@ -23,6 +23,7 @@ class sessionController {
           };
 
           jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
+            console.log(err);
             if (err) {
               res.sendStatus(403);
             } else {
