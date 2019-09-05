@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 const newSession = {
     mentorId: 1,
     menteeId: 2,
-    question: "What",
+    question: "What are you doing",
     menteeEmail: "Mbonigaba@gmail.com",
 };
 
