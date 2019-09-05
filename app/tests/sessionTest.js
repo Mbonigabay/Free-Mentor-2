@@ -7,8 +7,8 @@ chai.use(chaiHttp);
 const newSession = {
     mentorId: 1,
     menteeId: 2,
-    question: "What are you doing",
-    menteeEmail: "Mbonigaba@gmail.com",
+    question: "What are you doing!",
+    menteeEmail: "yusuf@gmail.com",
 };
 
 const userToken = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJmaXJzdE5hbWUiOiJTaGFubm9uIiwibGFzdE5hbWUiOiJKYWNrc29uIiwiZW1haWwiOiJzaGFubm9uQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJExSTGRvU3NpVkc3Q2xmb1MvL1p5NGUva0Z0blR6WEhxYjBmb0Yya3NMY21HcEZHV2YvY0ZPIiwiYWRkcmVzcyI6Ikdhc2FibyIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJQYWludGVyIiwiZXhwZXJ0aXNlIjoiUGFpbnRlciIsImF2YXRhciI6IiIsInJvbGVfaWQiOiIzIn0sImlhdCI6MTU2NzY4NTM2OX0.oweyt1rn24esS00GaBK-4TB4U3WR-y7fvbrwlQ4MwJo';
