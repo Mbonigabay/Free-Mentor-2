@@ -6,7 +6,7 @@ import auth from '../middleware/auth';
 
 const router = express.Router();
 
-
+router.get('/', usercontroller.welcome);
 router.post('/api/v1/auth/signup', usercontroller.Signup);
 router.post('/api/v1/auth/signin', usercontroller.Signin);
 router.get('/api/v1/mentors', auth, helper.verifyToken, usercontroller.ViewAllMentor);

@@ -27,7 +27,7 @@ Content-Type: application/json
 
 # View all mentors
 ###
-GET http://localhost:5000/api/v1/mentors
+GET http://localhost:5000
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlzdUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTU2NzY3NDEzMCwiZXhwIjoxNTY4Mjc4OTMwfQ.dW478YUhXtJwTEE33urbVzIgE2zEWnSyTmog-sGqWIc
 
 # View a mentor

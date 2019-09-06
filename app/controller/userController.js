@@ -13,6 +13,20 @@ dotenv.config();
  * User controller
  */
 class userController {
+
+
+    /**
+     * homepage  
+     * @param {*} req - request
+     * @param {*} res - response
+     */
+    static welcome(req, res) {
+        const message = 'Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions';
+
+        const result = helper.success(message, 200);
+        return res.status(200).json(result);
+      }
+
     /**
      * signup function
      * @param req - request
