@@ -18,4 +18,6 @@ router.patch('/api/v1/sessions/:sessionId/accept', auth, helper.verifyToken, ses
 router.patch('/api/v1/sessions/:sessionId/reject', auth, helper.verifyToken, sessioncontroller.RejectSession);
 router.post('/api/v1/sessions', helper.verifyToken, sessioncontroller.CreateSession);
 
+
+
 export default router;
