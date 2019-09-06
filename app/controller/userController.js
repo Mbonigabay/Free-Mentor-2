@@ -21,7 +21,6 @@ class userController {
     static Signup(req, res) {
         const newId = parseInt(users.length) + 1;
         const hashedPassword = helper.hashPassword(req.body.password);
-        const token = helper.generateToken(req.body.email, req.body.password);
         const email = req.body.email;
         const checkEmail = users.find(userEmail => userEmail.email === email);
         if (checkEmail) {
@@ -41,7 +40,6 @@ class userController {
             expertise: req.body.expertise,
             avatar: req.body.avatar,
             role_id: req.body.role_id,
-            token: token,
         };
         const result = Joi.validate(newUser, userValidation);
         if (result.error) {
@@ -49,9 +47,7 @@ class userController {
             return res.status(400).json(error);
         } else {
             users.push(newUser);
-            const result = helper.success('User created successfully', 201, {
-                token
-            })
+            const result = helper.success('User created successfully', 201)
             return res.status(201).json(result);
         }
     }
