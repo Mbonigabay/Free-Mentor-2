@@ -61,7 +61,7 @@ class userController {
             return res.status(400).json(error);
         } else {
             users.push(newUser);
-            const result = helper.success('User created successfully', 201)
+            const result = helper.success('User created successfully', 201, newUser)
             return res.status(201).json(result);
         }
     }
@@ -122,13 +122,11 @@ class userController {
                     mentorsRep.forEach((mentorRep) => {
                         delete mentorRep.password;
                     });
-                    const result = helper.success('success', 200,
-                        mentorsRep
-                    )
+                    const result = helper.success('success', 200, mentors)
                     return res.status(200).json(result);
 
                 } else {
-                    const error = helper.failure('No mentor registered', 400)
+                    const error = helper.failure('no mentor registered', 404)
                     return res.status(400).json(error);
                 }
             }
@@ -161,13 +159,13 @@ class userController {
                         )
                         return res.status(200).json(result);
                     } else {
-                        const error = helper.failure(`No mentor by that id`, 400)
+                        const error = helper.failure(`no mentor by that id`, 404)
                         return res.status(400).json(error);
                     }
 
                 } else {
-                    res.status(400).json({
-                        error: `No mentor registered`
+                    res.status(404).json({
+                        error: `no mentor registered`
                     })
                 }
             }
@@ -241,11 +239,11 @@ class userController {
                         return res.status(400).json(error);
                     }
                 } else {
-                    const error = helper.failure(`No user with the id of ${req.params.id}`, 400)
+                    const error = helper.failure(`no user with the id of ${req.params.id}`, 404)
                     return res.status(400).json(error);
                 }
             } else {
-                const error = helper.failure('no access', 400);
+                const error = helper.failure('no access', 401);
                 return res.status(400).json(error);
             }
         });
