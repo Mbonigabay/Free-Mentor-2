@@ -6,6 +6,13 @@ install:
 cache:
   directories:
   - node_modules  
+
+services:
+    - postgresql
+
+addons:
+    postgresql: '9.6'
+    
 before_script:
   - psql -c 'create database freementor;' -U yusuf
 script:

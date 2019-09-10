@@ -68,7 +68,10 @@ class userController {
         } finally {
           client.release()
         }
-      })().catch(e => console.log(e.stack))
+      })().catch(e => {
+        const error = helper.failure(e.stack, 400);
+        return res.status(400).json(error);
+      })
     }
   }
 
@@ -118,7 +121,10 @@ class userController {
       } finally {
         client.release()
       }
-    })().catch(e => console.log(e.stack))
+    })().catch(e => {
+      const error = helper.failure(e.stack, 400);
+      return res.status(400).json(error);
+    })
   }
 
 
