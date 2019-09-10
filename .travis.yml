@@ -6,6 +6,8 @@ install:
 cache:
   directories:
   - node_modules  
+before_script:
+  -psql -c 'create database freementor;' -U postgres
 script:
   - npm run test
 after_success:
