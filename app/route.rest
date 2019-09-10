@@ -1,18 +1,23 @@
+# Get all users
+
+GET http://localhost:5000
+
 # Sign Up
-POST  http://localhost:5000/api/v1/auth/signup
+###
+POST   http://localhost:5000/api/v1/auth/signup
 Content-Type: application/json
 
 {
-   "firstName": "Yusuf",
-    "lastName": "gdshgdsa",
-    "email": "yus@gmail.com",
+   "firstName": "user",
+    "lastName": "one",
+    "email": "user3@gmail.com",
     "password": "123456",
     "address": "kicukiro",
     "bio": "tokdddd",
     "occupation": "Fashion Design",
     "expertise": "Fashion Design",
     "avatar": "sssss",
-    "role_id": "2"
+    "role_id": "3"
 }
 
 # Sign in
@@ -21,44 +26,44 @@ POST  http://localhost:5000/api/v1/auth/signin
 Content-Type: application/json
 
 {
-    "email": "yus@gmail.com",
+    "email": "yu2@gmail.com",
     "password": "123456"
 }
 
 # View all mentors
 ###
 GET http://localhost:5000/api/v1/mentors
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlzdUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTU2NzY3NDEzMCwiZXhwIjoxNTY4Mjc4OTMwfQ.dW478YUhXtJwTEE33urbVzIgE2zEWnSyTmog-sGqWIc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU
 
 # View a mentor
 ###
-GET http://localhost:5000/api/v1/mentors/1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlzdUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IjEyMzQ1NiIsImlhdCI6MTU2NzY3NDEzMCwiZXhwIjoxNTY4Mjc4OTMwfQ.dW478YUhXtJwTEE33urbVzIgE2zEWnSyTmog-sGqWIc
+GET http://localhost:5000/api/v1/mentors/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU
 
 # Change role
 ###
-PATCH  http://localhost:5000/api/v1/user/3
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdE5hbWUiOiJKb2huIiwibGFzdE5hbWUiOiJEb2UiLCJlbWFpbCI6ImpvaG5AZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoia2ljdWtpcm8iLCJiaW8iOiIiLCJvY2N1cGF0aW9uIjoiR3JhcGhpYyBEZXNpZ24iLCJleHBlcnRpc2UiOiJHcmFwaGljIERlc2lnbiIsImF2YXRhciI6IiIsInJvbGVfaWQiOiIxIn0sImlhdCI6MTU2NzY3OTc0NH0.zlSZKBeBwyaEwZvtBwF10sPLTS7cm0mThOROW4qgGSo
+PATCH  http://localhost:5000/api/v1/user/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU
 
 # Create a session
 ###
 POST  http://localhost:5000/api/v1/sessions
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjozLCJmaXJzdE5hbWUiOiJTaGFubm9uIiwibGFzdE5hbWUiOiJKYWNrc29uIiwiZW1haWwiOiJzaGFubm9uQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJExSTGRvU3NpVkc3Q2xmb1MvL1p5NGUva0Z0blR6WEhxYjBmb0Yya3NMY21HcEZHV2YvY0ZPIiwiYWRkcmVzcyI6Ikdhc2FibyIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJQYWludGVyIiwiZXhwZXJ0aXNlIjoiUGFpbnRlciIsImF2YXRhciI6IiIsInJvbGVfaWQiOiIzIn0sImlhdCI6MTU2NzY4NTM2OX0.oweyt1rn24esS00GaBK-4TB4U3WR-y7fvbrwlQ4MwJo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU
 
 {
-   "mentorId": 3,
-    "menteeId": 2,
+   "mentorId": 16,
+    "menteeId": 17,
     "question": "What ARE YOU",
     "menteeEmail": "yusuf@gmail.com"
 }
 
 # Accept a Session
 ###
-PATCH   http://localhost:5000/api/v1/sessions/3/accept
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdE5hbWUiOiJCb2IiLCJsYXN0TmFtZSI6IldpbGxpYW1zIiwiZW1haWwiOiJib2JAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoiTnlhcnVnZW5nZSIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJTb2Z0d2FyZSBFbmdpbmVlcmluZyIsImV4cGVydGlzZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIiwiYXZhdGFyIjoiIiwicm9sZV9pZCI6IjMifSwiaWF0IjoxNTY3Njc0MzczfQ.LaCqOCKobBdVQeFbCwVtafrKpv-xhiHlrgfFxm-hY1I
+PATCH   http://localhost:5000/api/v1/sessions/2/accept
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU
 
 # Reject a Session
 ###
-PATCH   http://localhost:5000/api/v1/sessions/3/reject
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJmaXJzdE5hbWUiOiJCb2IiLCJsYXN0TmFtZSI6IldpbGxpYW1zIiwiZW1haWwiOiJib2JAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkRzFXYVhOT2wxVFVsU0tMNHhNc09BZUs2M0RWb0dCbFVSR0w1T0dtc0lzVHRtdG9NeU9zcUsiLCJhZGRyZXNzIjoiTnlhcnVnZW5nZSIsImJpbyI6IiIsIm9jY3VwYXRpb24iOiJTb2Z0d2FyZSBFbmdpbmVlcmluZyIsImV4cGVydGlzZSI6IlNvZnR3YXJlIEVuZ2luZWVyaW5nIiwiYXZhdGFyIjoiIiwicm9sZV9pZCI6IjMifSwiaWF0IjoxNTY3Njc0MzczfQ.LaCqOCKobBdVQeFbCwVtafrKpv-xhiHlrgfFxm-hY1I
+PATCH   http://localhost:5000/api/v1/sessions/2/reject
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inl1MUBnbWFpbC5jb20iLCJpYXQiOjE1NjgwMTExMzJ9.sJFiIoQwyy3lKzVpEoQ0-s8lOpzVBC0ukiYbzxYTJBU

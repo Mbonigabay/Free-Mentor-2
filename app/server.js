@@ -1,6 +1,8 @@
+import '@babel/polyfill';
 import express from 'express';
 import helper from '../app/middleware/helper';
 import router from '../app/routes/routes';
+
 
 
 const app = express();
@@ -18,10 +20,6 @@ app.use(function (req, res, next) {
     return res.status(404).json(result);
 });
 
-app.use(function(err, req, res, next) {
-    const result = helper.failure('unkown error', 500);
-    return res.status(500).json(result);
-  });
 
 const PORT = process.env.PORT || 5000;
 

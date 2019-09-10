@@ -1,44 +1,43 @@
-const users = [{
-    id: 1,
-    firstName: 'John',
-	lastName: 'Doe',
-	email: 'john@gmail.com',
-	password: '$2b$10$G1WaXNOl1TUlSKL4xMsOAeK63DVoGBlURGL5OGmsIsTtmtoMyOsqK',
-	address: 'kicukiro',
-	bio: '',
-	occupation: 'Graphic Design',
-	expertise: 'Graphic Design',
-	avatar: '',
-	role_id: '1'
-},
-{
-    id: 2,
-    firstName: 'Bob',
-	lastName: 'Williams',
-	email: 'bob@gmail.com',
-	password: '$2b$10$G1WaXNOl1TUlSKL4xMsOAeK63DVoGBlURGL5OGmsIsTtmtoMyOsqK',
-	address: 'Nyarugenge',
-	bio: '',
-	occupation: 'Software Engineering',
-	expertise: 'Software Engineering',
-	avatar: '',
-	role_id: '2'
-},
-{
-   
-	id: 3,
-    firstName: 'Shannon',
-	lastName: 'Jackson',
-    email: 'shannon@gmail.com',
-	password: '$2b$10$LRLdoSsiVG7ClfoS//Zy4e/kFtnTzXHqb0foF2ksLcmGpFGWf/cFO',
-	address: 'Gasabo',
-	bio: '',
-	occupation: 'Painter',
-	expertise: 'Painter',
-	avatar: '',
-	role_id: '3'
-	
-}
-];
+const userTable = `
+CREATE TABLE IF NOT EXISTS users (
+        id serial primary key,
+        "firstName" varchar(30) NOT NULL,
+        "lastName" varchar(25) NOT NULL,
+        email varchar(30) UNIQUE,
+    password varchar(100) NOT NULL,
+    address varchar(30) NOT NULL,
+		bio text NOT NULL,
+		occupation varchar(30) NOT NULL,
+		expertise varchar(30) NOT NULL,
+		avatar varchar(30) NOT NULL,
+		role_id integer NOT NULL
+    )`;
+const addUser = `insert into users (
+	"firstName", "lastName", email, password,address, bio, occupation, expertise, avatar, role_id
+    )VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) ON CONFLICT DO NOTHING returning *`;
 
-module.exports = users;
+const removeUser = 'delete from users where email = ($1)';
+const searchUser = 'select * from users where email = ($1)';
+const searchUserById = 'select * from users where id = ($1)';
+const getAllUser = 'select * from users';
+const getAllMentor = 'select * from users where role_id = 2';
+const searchMentorById = 'select * from users where role_id = 2 and id =($1)';
+const checkIfAdmin = 'select * from users where role_id = 1 and email =($1)';
+const checkIfMentor = 'select * from users where role_id = 2 and email =($1)';
+const changeToUser = 'UPDATE users SET role_id= 3 WHERE id=($1)';
+const changeToMentor = 'UPDATE users SET role_id= 2 WHERE id=($1)';
+
+export default {
+  userTable,
+  addUser,
+  removeUser,
+  searchUser,
+  searchUserById,
+  getAllUser,
+  getAllMentor,
+  searchMentorById,
+  checkIfAdmin,
+  checkIfMentor,
+  changeToMentor,
+  changeToUser
+};
