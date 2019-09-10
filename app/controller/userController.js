@@ -68,10 +68,64 @@ class userController {
         } finally {
           client.release()
         }
-      })().catch(e => console.log(e.stack))
+      })().catch(e => {
+      const error = helper.failure(e.stack, 400);
+      return res.status(400).json(error);
+    })
     }
   }
 
+  /**
+   * Sign in function
+   * @param req - request
+   * @param res - response
+   */
+  static Signin(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (req.body.email == null || req.body.password == null) {
+      const error = helper.failure('Fill all fields', 400);
+      return res.status(400).json(error);
+    }
+
+    pool.on('error', (err, client) => {
+      console.error('Unexpected error on idle client', err)
+      process.exit(-1)
+    });
+    (async () => {
+      const client = await pool.connect()
+      try {
+        const user = await client.query(users.searchUser, [email])
+        if (user.rowCount === 0) {
+          const error = helper.failure('Invalid email or password', 400)
+          return res.status(400).json(error);
+        } else {
+          const hash = user.rows[0].password
+          const check = await bcrypt.compareSync(password, hash);
+          if (!check) {
+            const error = helper.failure('Invalid email or password', 400)
+            return res.status(400).json(error);
+          } else {
+            jwt.sign({
+              email,
+            }, process.env.JWT_KEY, (err, token) => {
+              const result = helper.success('Success', 200, {
+                token
+              })
+              return res.status(200).json(result);
+            })
+          }
+        }
+
+      } finally {
+        client.release()
+      }
+    })().catch(e => {
+      const error = helper.failure(e.stack, 400);
+      return res.status(400).json(error);
+    })
+  }
 
 
 }
