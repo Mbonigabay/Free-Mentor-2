@@ -10,6 +10,11 @@ cache:
 services:
     - postgresql
 
+env:
+  global:
+  - URL=http://localhost:5000
+  - PORT=5000
+
 addons:
     postgresql: '9.6'
     
