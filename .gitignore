@@ -61,4 +61,5 @@ typings/
 .next
 
 #mine
-route.rest
+app/route.rest
+yarn.lock

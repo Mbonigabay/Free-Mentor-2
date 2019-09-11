@@ -4,7 +4,7 @@ import Joi from '@hapi/joi';
  * User's validation schema
  */
 const userSchema = Joi.object().keys({
-    id: Joi.number().required(),
+ 
     firstName: Joi.string().regex(/^[a-zA-Z]{3,30}$/).min(3).max(20).required(),
 	lastName: Joi.string().regex(/^[a-zA-Z]{3,30}$/).min(3).max(20).required(),
 	email: Joi.string().email().required(),

@@ -6,248 +6,127 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import userValidation from '../middleware/validation';
 import Joi from '@hapi/joi';
+import pool from '../dbConnect';
 
 
 dotenv.config();
 /**
  * User controller
  */
+
 class userController {
 
 
-    /**
-     * homepage  
-     * @param {*} req - request
-     * @param {*} res - response
-     */
-    static welcome(req, res) {
-        const message = 'Free Mentors is a social initiative where accomplished professionals become role models to young people to provide free mentorship sessions';
-
-        const result = helper.success(message, 200);
-        return res.status(200).json(result);
-      }
-
-    /**
-     * signup function
-     * @param req - request
-     * @param res - response
-     */
-    static Signup(req, res) {
-        const newId = parseInt(users.length) + 1;
-        const hashedPassword = helper.hashPassword(req.body.password);
-        const email = req.body.email;
-        const checkEmail = users.find(userEmail => userEmail.email === email);
-        if (checkEmail) {
-            const error = helper.failure('Email Taken', 400);
+  /**
+   * signup function
+   * @param req - request
+   * @param res - response
+   */
+  static async Signup(req, res) {
+    const hashedPassword = helper.hashPassword(req.body.password);
+    const newUser = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+      address: req.body.address,
+      bio: req.body.bio,
+      occupation: req.body.occupation,
+      expertise: req.body.expertise,
+      avatar: req.body.avatar,
+      role_id: req.body.role_id,
+    };
+    const result = Joi.validate(newUser, userValidation);
+    if (result.error) {
+      const error = helper.failure(`${result.error.details[0].message}`, 400)
+      return res.status(400).json(error);
+    } else {
+      pool.on('error', (err, client) => {
+        console.error('Unexpected error on idle client', err)
+        process.exit(-1)
+      });
+      (async () => {
+        const client = await pool.connect()
+        try {
+          const user = await client.query(users.searchUser, [newUser.email])
+          if (user.rowCount !== 0) {
+            const error = helper.failure('Email Taken', 400)
             return res.status(400).json(error);
+          } else {
+            const result = await client.query(users.addUser, [newUser.firstName, newUser.lastName, newUser.email, newUser.password, newUser.address, newUser.bio, newUser.occupation, newUser.expertise, newUser.avatar, newUser.role_id])
+            if (!result.error) {
+              const userCreated = result.rows[0];
+              delete userCreated.password;
+              const success = helper.success('success', 201, userCreated);
+              return res.status(201).json(success);
+            }
+            return res.status(400).json({
+              status: 400,
+              message: 'server error please try again later',
+            });
+          }
+        } finally {
+          client.release()
         }
-        
-        const newUser = {
-            id: newId,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: hashedPassword,
-            address: req.body.address,
-            bio: req.body.bio,
-            occupation: req.body.occupation,
-            expertise: req.body.expertise,
-            avatar: req.body.avatar,
-            role_id: req.body.role_id,
-        };
-        const result = Joi.validate(newUser, userValidation);
-        if (result.error) {
-            const error = helper.failure(`${result.error.details[0].message}`, 400)
-            return res.status(400).json(error);
-        } else {
-            users.push(newUser);
-            const result = helper.success('User created successfully', 201, newUser)
-            return res.status(201).json(result);
-        }
+      })().catch(e => {
+      const error = helper.failure(e.stack, 400);
+      return res.status(400).json(error);
+    })
+    }
+  }
+
+  /**
+   * Sign in function
+   * @param req - request
+   * @param res - response
+   */
+  static Signin(req, res) {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (req.body.email == null || req.body.password == null) {
+      const error = helper.failure('Fill all fields', 400);
+      return res.status(400).json(error);
     }
 
-    /**
-     * Sign in function
-     * @param req - request
-     * @param res - response
-     */
-    static Signin(req, res) {
-        const email = req.body.email;
-        const password = req.body.password;
-
-        if (req.body.email == null || req.body.password == null) {
-            const error = helper.failure('Fill all fields', 400);
-            return res.status(400).json(error);
-        }
-
-        const user = users.find(user => user.email === email);
-        if (!user) {
-            const error = helper.failure('Invalid email or password', 400);
-            return res.status(400).json(error);
-
-        }
-
-        const hash = user.password;
-        const check = bcrypt.compareSync(password, hash);
-        if (!check) {
+    pool.on('error', (err, client) => {
+      console.error('Unexpected error on idle client', err)
+      process.exit(-1)
+    });
+    (async () => {
+      const client = await pool.connect()
+      try {
+        const user = await client.query(users.searchUser, [email])
+        if (user.rowCount === 0) {
+          const error = helper.failure('Invalid email or password', 400)
+          return res.status(400).json(error);
+        } else {
+          const hash = user.rows[0].password
+          const check = await bcrypt.compareSync(password, hash);
+          if (!check) {
             const error = helper.failure('Invalid email or password', 400)
             return res.status(400).json(error);
-        } else {
+          } else {
             jwt.sign({
-                user,
+              email,
             }, process.env.JWT_KEY, (err, token) => {
-                const result = helper.success('Success', 200, {
-                    token
-                })
-                return res.status(200).json(result);
+              const result = helper.success('Success', 200, {
+                token
+              })
+              return res.status(200).json(result);
             })
+          }
         }
-    }
 
-    /**
-     * View all mentors function
-     * @param req - request
-     * @param res - response
-     */
-    static ViewAllMentor(req, res) {
-        const found = users.some(user => user.role_id == 2);
+      } finally {
+        client.release()
+      }
+    })().catch(e => {
+      const error = helper.failure(e.stack, 400);
+      return res.status(400).json(error);
+    })
+  }
 
-        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-            if (err) {
-                res.sendStatus(403);
-            } else {
-                if (found) {
-                    const mentors = users.filter(user => user.role_id == 2);
-                    const mentorsRep = mentors;
-                    mentorsRep.forEach((mentorRep) => {
-                        delete mentorRep.password;
-                    });
-                    const result = helper.success('success', 200, mentors)
-                    return res.status(200).json(result);
-
-                } else {
-                    const error = helper.failure('no mentor registered', 404)
-                    return res.status(400).json(error);
-                }
-            }
-        })
-
-    }
-
-    /**
-     * View a mentor
-     * @param req - request
-     * @param res - response
-     */
-    static ViewAMentor(req, res) {
-        const found = users.some(user => user.role_id == 2);
-
-        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-            if (err) {
-                res.sendStatus(403);
-            } else {
-                if (found) {
-                    const check = users.some(user => user.id === parseInt(req.params.id) && user.role_id == 2)
-                    if (check) {
-                        const mentor = users.filter(user => user.id === parseInt(req.params.id) && user.role_id == 2)
-                        const mentorsRep = mentor;
-                        mentorsRep.forEach((mentorRep) => {
-                            delete mentorRep.password;
-                        });
-                        const result = helper.success('success', 200,
-                            mentorsRep
-                        )
-                        return res.status(200).json(result);
-                    } else {
-                        const error = helper.failure(`no mentor by that id`, 404)
-                        return res.status(400).json(error);
-                    }
-
-                } else {
-                    res.status(404).json({
-                        error: `no mentor registered`
-                    })
-                }
-            }
-        })
-
-
-    }
-
-    /**
-     * Change Role
-     * @param req - request
-     * @param res - response
-     */
-    static ChangeRole(req, res) {
-        jwt.verify(req.token, process.env.JWT_KEY, (err, authData) => {
-            if (req.userData.user.role_id == 1) {
-                const found = users.some(user => user.id === parseInt(req.params.id));
-                if (found) {
-                    const user = users.find(user => user.id === parseInt(req.params.id));
-                    if (user.role_id == 3) {
-                        const updUser = req.body;
-                        users.forEach(user => {
-                            if (user.id === parseInt(req.params.id)) {
-                                user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
-                                user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
-                                user.email = updUser.email ? updUser.email : user.email;
-                                user.password = updUser.password ? updUser.password : user.password;
-                                user.address = updUser.address ? updUser.address : user.address;
-                                user.bio = updUser.bio ? updUser.bio : user.bio;
-                                user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
-                                user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
-                                user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
-                                user.role_id = "2";
-
-                                const userRep = user;
-                                delete userRep.password;
-                              
-                                const result = helper.success('User changed to mentor', 200,
-                                    userRep
-                                )
-                                return res.status(200).json(result);
-
-                            }
-                        });
-                    } else if (user.role_id == 2) {
-                        const updUser = req.body;
-                        users.forEach(user => {
-                            if (user.id === parseInt(req.params.id)) {
-                                user.firstName = updUser.firstName ? updUser.firstName : user.firstName;
-                                user.lastName = updUser.lastName ? updUser.lastName : user.lastName;
-                                user.email = updUser.email ? updUser.email : user.email;
-                                user.password = updUser.password ? updUser.password : user.password;
-                                user.address = updUser.address ? updUser.address : user.address;
-                                user.bio = updUser.bio ? updUser.bio : user.bio;
-                                user.occupation = updUser.occupation ? updUser.occupation : user.occupation;
-                                user.expertise = updUser.expertise ? updUser.expertise : user.expertise;
-                                user.avatar = updUser.avatar ? updUser.avatar : user.avatar;
-                                user.role_id = "3";
-
-
-                                const userRep = user;
-                                delete userRep.password;
-
-                                const result = helper.success('Mentor changed to user', 201, user)
-                                return res.status(201).json(result);
-
-                            }
-                        });
-                    } else {
-                        const error = helper.failure('This an Admin', 400)
-                        return res.status(400).json(error);
-                    }
-                } else {
-                    const error = helper.failure(`no user with the id of ${req.params.id}`, 404)
-                    return res.status(400).json(error);
-                }
-            } else {
-                const error = helper.failure('no access', 401);
-                return res.status(400).json(error);
-            }
-        });
-    }
 
 }
 
