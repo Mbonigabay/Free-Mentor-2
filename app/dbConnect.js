@@ -18,6 +18,7 @@ if (process.env.NODEenv === 'DEV') {
   pool = new Pool({
     connectionString: process.env.DATABASEURL,
   });
+  
 }
 
 export default pool;
