@@ -68,7 +68,7 @@ describe('User', () => {
         email: 'johsn@gmail.com',
         password: '123456'
       };
-      chai.request(app).post('/api/v1/auth/signin').send(mock.loginUser).end((err, res) => {
+      chai.request(app).post('/api/v1/auth/signin').send(user).end((err, res) => {
         chai.expect(res.statusCode).to.be.equal(400);
         chai.expect(res.body.error).to.be.equal('Invalid email or password');
       });
