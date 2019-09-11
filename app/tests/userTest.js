@@ -109,5 +109,63 @@ describe('User', () => {
 
   });
 
+  describe('Sign in', () => {
+    it('should be able to signin', (done) => {
+      const user = {
+        email: 'Mbonigabay@gmail.com',
+        password: '123456',
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(200);
+          chai.expect(res.body).to.be.an('object');
+        });
+      done();
+    }),
+    it('shouldn\'t be able to signin with missing data', (done) => {
+      const user = {
+        email: 'Mbonigabay@gmail.com'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+          chai.expect(res.body.error).to.be.equal('Fill all fields');
+        });
+      done();
+    }),
+    it('shouldn\'t be able to signin with a wrong password', (done) => {
+      const user = {
+        email: 'Mbonigabay@gmail.com',
+        password: '1233456'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+          chai.expect(res.body.error).to.be.equal('Invalid email or password');
+        });
+      done();
+    }),
+    it('shouldn\'t be able to signin with a wrong email', (done) => {
+      const user = {
+        email: 'johsn@gmail.com',
+        password: '123456'
+      };
+      chai.request(app)
+        .post('/api/v1/auth/signin')
+        .send(user)
+        .end((err, res) => {
+          chai.expect(res.statusCode).to.be.equal(400);
+          chai.expect(res.body.error).to.be.equal('Invalid email or password');
+        });
+      done();
+    })
+
+  });
   
 });

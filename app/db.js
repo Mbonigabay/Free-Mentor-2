@@ -1,4 +1,3 @@
-import '@babel/polyfill';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import con from './dbConnect';

@@ -69,9 +69,9 @@ class userController {
           client.release()
         }
       })().catch(e => {
-      const error = helper.failure(e.stack, 400);
-      return res.status(400).json(error);
-    })
+        const error = helper.failure(e.stack, 400);
+        return res.status(400).json(error);
+      })
     }
   }
 
