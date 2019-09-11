@@ -8,7 +8,8 @@ import userValidation from '../middleware/validation';
 import Joi from '@hapi/joi';
 import pool from '../dbConnect';
 
-dotenv.config(); /** * User controller */
+dotenv.config(); 
+/** * User controller */
 class userController {
 
   /** * signup function * @param req - request * @param res - response */

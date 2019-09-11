@@ -1,10 +1,11 @@
 import mock from  './mockUser';
+import dotenv from 'dotenv';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../server');
 chai.use(chaiHttp);
 
-
+dotenv.config();
 describe('User', () => {
   describe('Sign up', () => {
     it('should be able to sign up', (done) => {
@@ -75,7 +76,7 @@ describe('User', () => {
     })
     describe('View all mentors', () => {
       it('should be able to view all mentor', (done) => {
-        chai.request(app).get('/api/v1/mentors').set('Authorization', token).end((err, res) => {
+        chai.request(app).get('/api/v1/mentors').set('Authorization', process.env.USERTOKEN).end((err, res) => {
           chai.expect(res.statusCode).to.be.equal(200);
         });
         done();
