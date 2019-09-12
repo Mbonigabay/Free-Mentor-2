@@ -113,7 +113,7 @@ class userController {
               return res.status(200).json(result);
             }
             return res.status(404).json({
-              status: 500,
+              status: 404,
               message: 'server error please try again later',
             });
           } catch(e) {
