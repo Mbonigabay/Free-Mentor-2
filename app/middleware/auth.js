@@ -17,7 +17,7 @@ const auth = (req, res, next) => {
           error: 'invalid token'
         })
       } else {
-        const authData = data;
+        req.userData = data;
       }
     });
     next();
