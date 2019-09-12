@@ -11,7 +11,7 @@
     "create-table": "node --require @babel/polyfill --require @babel/register ./app/db.js",
     "drop-table": "node --require @babel/polyfill --require @babel/register ./app/dropTables.js ",
     "clean": "rm -rf ./build",
-    "build": "./node_modules/.bin/babel ./app -d ./build",
+    "build": "./node_modules/.bin/babel ./app -d ./build"
   },
   "repository": {
     "type": "git",
