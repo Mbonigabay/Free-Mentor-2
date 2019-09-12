@@ -5,12 +5,12 @@ dotenv.config();
 
 let pool;
 
-if (process.env.NODEenv === 'TEST') {
+if (process.env.NODEenv === 'Test') {
   pool = new Pool({
     connectionString: process.env.DATABASETEST,
   });
 }
-if (process.env.NODEenv === 'DEV') {
+if (process.env.NODEenv === 'Development') {
   pool = new Pool({
     connectionString: process.env.DATABASEURL,
   });

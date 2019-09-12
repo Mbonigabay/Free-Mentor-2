@@ -4,8 +4,7 @@
   "description": "Free Mentors is a social initiative where accomplished professionals become role models to \r young people to provide free mentorship sessions.",
   "main": "./app/server.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
-    "start": "cross-env NODE_ENV=production babel-node ./app/server.js",
+    "start": "cross-env NODEenv=production node ./app/server.js",
     "test": "yarn run drop-table && yarn run create-table && nyc --reporter=html --reporter=text mocha --require @babel/register  --require @babel/polyfill app/tests/*.js --timeout 15000 --exit",
     "dev": "yarn run create-table && nodemon --require @babel/register ./app/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
@@ -34,6 +33,7 @@
     "@hapi/joi": "^15.1.1",
     "bcrypt": "^3.0.6",
     "coveralls": "^3.0.6",
+    "cross-env": "^5.2.1",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",

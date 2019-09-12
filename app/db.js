@@ -6,7 +6,7 @@ import session from './model/Session';
 dotenv.config();
 const createTables = async () => {
   const tableUser = user.userTable;
-  cont tableSession = session.sessionTable;
+  const tableSession = session.sessionTable;
   const tables = `${tableUser}; ${tableSession}`;
   
   

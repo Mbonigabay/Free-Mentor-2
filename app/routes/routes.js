@@ -16,5 +16,7 @@ router.get('/api/v1/mentors/:id', auth, mentorcontroller.ViewAMentor);
 router.patch('/api/v1/user/:id', auth, admincontroller.ChangeRole);
 
 router.post('/api/v1/sessions', auth, sessioncontroller.CreateSession);
+router.patch('/api/v1/sessions/:sessionId/accept', auth, sessioncontroller.AcceptSession);
+router.patch('/api/v1/sessions/:sessionId/reject', auth, sessioncontroller.RejectSession);
 
 export default router;
