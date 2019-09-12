@@ -10,11 +10,16 @@ cache:
 services:
     - postgresql
 
+env:
+  global:
+  - URL=http://localhost:5000
+  - PORT=5000
+
 addons:
     postgresql: '9.6'
     
 before_script:
-  - psql -c 'create database freementor;' -U yusuf
+  - psql -c 'create database freementor;' -U postgres
 script:
   - yarn run test
 after_success:

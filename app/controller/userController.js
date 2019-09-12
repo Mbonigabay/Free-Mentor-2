@@ -8,19 +8,15 @@ import userValidation from '../middleware/validation';
 import Joi from '@hapi/joi';
 import pool from '../dbConnect';
 
-
-dotenv.config();
+dotenv.config(); 
 /**
- * User controller
+ *  User controller
  */
-
 class userController {
 
-
-  /**
-   * signup function
-   * @param req - request
-   * @param res - response
+  /** signup function 
+   * @param req - request 
+   * @param res - response 
    */
   static async Signup(req, res) {
     const hashedPassword = helper.hashPassword(req.body.password);
@@ -41,19 +37,13 @@ class userController {
       const error = helper.failure(`${result.error.details[0].message}`, 400)
       return res.status(400).json(error);
     } else {
-      pool.on('error', (err, client) => {
-        console.error('Unexpected error on idle client', err)
-        process.exit(-1)
-      });
-      (async () => {
-        const client = await pool.connect()
         try {
-          const user = await client.query(users.searchUser, [newUser.email])
+          const user = await pool.query(users.searchUser, [newUser.email])
           if (user.rowCount !== 0) {
             const error = helper.failure('Email Taken', 400)
             return res.status(400).json(error);
           } else {
-            const result = await client.query(users.addUser, [newUser.firstName, newUser.lastName, newUser.email, newUser.password, newUser.address, newUser.bio, newUser.occupation, newUser.expertise, newUser.avatar, newUser.role_id])
+            const result = await pool.query(users.addUser, [newUser.firstName, newUser.lastName, newUser.email, newUser.password, newUser.address, newUser.bio, newUser.occupation, newUser.expertise, newUser.avatar, newUser.role_id])
             if (!result.error) {
               const userCreated = result.rows[0];
               delete userCreated.password;
@@ -65,38 +55,26 @@ class userController {
               message: 'server error please try again later',
             });
           }
-        } finally {
-          client.release()
+        } catch(e) {
+          const error = helper.failure(e.stack, 400);
+          return res.status(400).json(error);
         }
-      })().catch(e => {
-        const error = helper.failure(e.stack, 400);
-        return res.status(400).json(error);
-      })
-    }
   }
-
+}
   /**
-   * Sign in function
-   * @param req - request
-   * @param res - response
+   * Sign in function 
+   * @param req - request 
+   * @param res - response 
    */
-  static Signin(req, res) {
+  static async Signin(req, res) {
     const email = req.body.email;
     const password = req.body.password;
-
     if (req.body.email == null || req.body.password == null) {
       const error = helper.failure('Fill all fields', 400);
       return res.status(400).json(error);
     }
-
-    pool.on('error', (err, client) => {
-      console.error('Unexpected error on idle client', err)
-      process.exit(-1)
-    });
-    (async () => {
-      const client = await pool.connect()
       try {
-        const user = await client.query(users.searchUser, [email])
+        const user = await pool.query(users.searchUser, [email])
         if (user.rowCount === 0) {
           const error = helper.failure('Invalid email or password', 400)
           return res.status(400).json(error);
@@ -117,17 +95,32 @@ class userController {
             })
           }
         }
-
-      } finally {
-        client.release()
-      }
-    })().catch(e => {
-      const error = helper.failure(e.stack, 400);
+      } catch(e) {
+        const error = helper.failure(e.stack, 400);
       return res.status(400).json(error);
-    })
+      }
   }
 
+  static async ViewAllMentor(req, res) {
+                  try {
+            const allMentors = await pool.query(users.getAllMentor)
+            const mentors = allMentors.rows
+            mentors.forEach((mentor) => {
+              delete mentor.password;
+            });
+            if (!allMentors.error) {
+              const result = helper.success('success', 200, mentors)
+              return res.status(200).json(result);
+            }
+            return res.status(404).json({
+              status: 404,
+              message: 'server error please try again later',
+            });
+          } catch(e) {
+            const error = helper.failure(e.stack, 400);
+            return res.status(400).json(error);
+          }
+  }
 
 }
-
 export default userController;
