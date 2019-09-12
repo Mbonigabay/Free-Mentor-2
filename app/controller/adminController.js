@@ -1,15 +1,14 @@
-//import
+// import
 import dotenv from 'dotenv';
 import users from '../model/User';
 import helper from '../middleware/helper';
 import pool from '../dbConnect';
 
-dotenv.config(); 
+dotenv.config();
 /**
  *  Admin controller
  */
 class adminController {
-
   static async ChangeRole(req, res) {
           try {
             const auth = await pool.query(users.checkIfAdmin, [req.userData.email])
@@ -19,7 +18,7 @@ class adminController {
               if (userRole === 1){
                 const error = helper.failure('Can\'t change admin\'s role', 401);
                 return res.status(401).json(error);
-              }else if (userRole === 2) {
+              }if (userRole === 2) {
                 const result = await pool.query(users.changeToUser, [req.params.id])
                 if (!result.error) {
                     const success = helper.success('success', 200, userToChange.rows[0]);
@@ -46,6 +45,5 @@ class adminController {
             return res.status(400).json(error);
           }
   }
-  
 }
 export default adminController;
