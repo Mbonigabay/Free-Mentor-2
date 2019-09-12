@@ -14,7 +14,7 @@ if (process.env.NODEenv === 'DEV') {
   pool = new Pool({
     connectionString: process.env.DATABASEURL,
   });
-} else if (process.env.NODEenv === 'production'){
+} else {
   pool = new Pool({
     connectionString: process.env.DATABASEURL,
   });
