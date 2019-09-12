@@ -16,6 +16,6 @@
     },
     "rules": {
         "linebreak-style": ["error", "windows"],
-        "func-names": "off",
+        "func-names": "off"
     }
 }

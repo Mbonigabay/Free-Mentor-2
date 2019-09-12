@@ -19,7 +19,7 @@ addons:
     postgresql: '9.6'
     
 before_script:
-  - psql -c 'create database freementor;' -U postgres
+  - psql -c 'create database freementor_test;' -U postgres
 script:
   - npm run test
 after_success:
