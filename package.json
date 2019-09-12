@@ -5,13 +5,12 @@
   "main": "./app/server.js",
   "scripts": {
     "test": "cross-env NODEenv=TEST yarn run drop-table && yarn run create-table && nyc --reporter=html --reporter=text mocha --require @babel/register  --require @babel/polyfill app/tests/*.js --timeout 15000 --exit",
-    "start": "yarn run clean && yarn run build && yarn run create-table && node ./build/server.js",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js",
+    "start": "cross-env NODE_ENV=production babel-node ./app/server.js",
     "dev": "yarn run create-table && nodemon --require @babel/register ./app/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "create-table": "node --require @babel/polyfill --require @babel/register ./app/db.js",
     "drop-table": "node --require @babel/polyfill --require @babel/register ./app/dropTables.js ",
-    "clean": "rm -rf ./build",
-    "build": "./node_modules/.bin/babel ./app -d ./build"
   },
   "repository": {
     "type": "git",
