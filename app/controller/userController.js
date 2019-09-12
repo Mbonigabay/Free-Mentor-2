@@ -122,5 +122,30 @@ class userController {
           }
   }
 
+  static async ViewAMentor(req, res) {
+          try {
+            const mentor = await pool.query(users.searchMentorById, [req.params.id])
+            if(mentor.rowCount !== 0){
+            if (!mentor.error) {
+              return res.status(200).json({
+                status: 200,
+                data: mentor.rows,
+              });
+            }}else {
+              return res.status(400).json({
+                status: 400,
+                message: 'no mentor by that id',
+              });
+            }
+            return res.status(401).json({
+              status: 500,
+              message: 'server error please try again later',
+            });
+          }  catch(e) {
+            const error = helper.failure(e.stack, 400);
+            return res.status(400).json(error);
+          }
+        }
+
 }
 export default userController;

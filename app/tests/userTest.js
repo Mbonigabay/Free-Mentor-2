@@ -74,13 +74,28 @@ describe('User', () => {
       });
       done();
     })
-    describe('View all mentors', () => {
-      it('should be able to view all mentor', (done) => {
-        chai.request(app).get('/api/v1/mentors').set('Authorization', process.env.USERTOKEN).end((err, res) => {
-          chai.expect(res.statusCode).to.be.equal(200);
-        });
-        done();
+  });
+
+  describe('View all mentors', () => {
+    it('should be able to view all mentor', (done) => {
+      chai.request(app).get('/api/v1/mentors').set('Authorization', process.env.USERTOKEN).end((err, res) => {
+        chai.expect(res.statusCode).to.be.equal(200);
       });
+      done();
     });
   });
+
+  describe('View a mentor', () => {
+    it('should be able to view a mentor', (done) => {
+      chai.request(app)
+      .get('/api/v1/mentors/2')
+      .set('Authorization', process.env.USERTOKEN)
+      .end((err, res) => {
+        chai.expect(res.statusCode).to.be.equal(200);
+      });
+    done();
+    })
+  });
+
+  
 });
