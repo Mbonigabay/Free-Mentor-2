@@ -69,12 +69,13 @@ class userController {
   static async Signin(req, res) {
     const email = req.body.email;
     const password = req.body.password;
+    const user = await pool.query(users.searchUser, [email]);
+    const role_id = user.rows[0].role_id;
     if (req.body.email == null || req.body.password == null) {
       const error = helper.failure('Fill all fields', 400);
       return res.status(400).json(error);
     }
       try {
-        const user = await pool.query(users.searchUser, [email])
         if (user.rowCount === 0) {
           const error = helper.failure('Invalid email or password', 400)
           return res.status(400).json(error);
@@ -86,7 +87,7 @@ class userController {
             return res.status(400).json(error);
           } else {
             jwt.sign({
-              email,
+              email, role_id
             }, process.env.JWT_KEY, (err, token) => {
               const result = helper.success('Success', 200, {
                 token
@@ -101,52 +102,5 @@ class userController {
       }
   }
 
-  static async ChangeRole(req, res) {
-          try {
-            const auth = await pool.query(users.checkIfAdmin, [req.userData.email])
-            if (auth.rowCount !== 0){
-              const userToChange = await client.query(users.searchUserById, [req.params.id]);
-              const userRole = userToChange.rows[0].role_id;
-              if (userRole === 1){
-                return res.status(400).json({
-                  status: 400,
-                  message: 'Can\'t change admin\'s role',
-                });
-              }else if (userRole === 2) {
-                const result = await pool.query(users.changeToUser, [req.params.id])
-                if (!result.error) {
-                  return res.status(200).json({
-                    status: 200,
-                    data: userToChange.rows,
-                  });
-                }
-
-              } else{
-                const result = await pool.query(users.changeToMentor, [req.params.id])
-                if (!result.error) {
-                  return res.status(200).json({
-                    status: 200,
-                    data: userToChange.rows,
-                  });
-                }
-              }
-            if (!result.error) {
-              return res.status(200).json({
-                status: 200,
-                data: mentor.rows,
-              });
-            }}
-            else {
-              return res.status(401).json({
-                status: 401,
-                message: 'you must be an Admin',
-              });
-            }
-          } catch (e) {
-            const error = helper.failure(e.stack, 400);
-            return res.status(400).json(error);
-          }
-  }
-  
 }
 export default userController;
