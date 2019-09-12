@@ -36,7 +36,7 @@ class mentorController {
                 const result = helper.success('success', 200,  mentor.rows)
                 return res.status(200).json(result);
             } else {
-                const result = helper.failure('no mentor by that id', 404,  mentor.rows)
+        const result = helper.failure('no mentor by that id', 404,  mentor.rows)
                 return res.status(404).json(result);
             }
         } catch (e) {
