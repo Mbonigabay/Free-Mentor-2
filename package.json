@@ -10,7 +10,7 @@
     "dev": "yarn run create-table && nodemon --require @babel/register ./app/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "create-table": "node --require @babel/polyfill --require @babel/register ./app/db.js",
-    "drop-table": "node --require @babel/polyfill --require @babel/register ./app/dropTables.js ",
+    "drop-table": "node --require @babel/polyfill --require @babel/register ./app/dropTables.js "
   },
   "repository": {
     "type": "git",
