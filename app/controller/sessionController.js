@@ -70,15 +70,15 @@ class sessionController {
             });
           }
         } else {
-          return res.status(400).json({
-            status: 400,
-            message: 'Can\'t accept this session',
+          return res.status(401).json({
+            status: 401,
+            error: 'Can\'t accept this session',
           });
         }
       }
       return res.status(401).json({
         status: 401,
-        message: 'Only mentor allowed',
+        error: 'Only mentor allowed',
       });
     } catch (e) {
       const error = helper.failure(e.stack, 400);
