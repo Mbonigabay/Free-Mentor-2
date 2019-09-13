@@ -60,13 +60,14 @@ class sessionController {
       const session = await pool.query(sessions.searchSessionById, [req.params.sessionId])
       const auth = await pool.query(users.checkIfMentor, [req.userData.email])
       if (auth.rowCount !== 0) {
-        if (auth.rows[0].id === session.rows[0].mentorId) {
+        if (auth.rows[0].id == session.rows[0].mentorId) {
           const result = await pool.query(sessions.acceptASession, [req.params.sessionId])
           const session = await pool.query(sessions.searchSessionById, [req.params.sessionId])
           if (!result.error) {
             return res.status(200).json({
               status: 200,
-              data: session.rows,
+              data: session.rows[0],
+
             });
           }
         } else {
@@ -104,7 +105,8 @@ class sessionController {
                 if (!result.error) {
                   return res.status(200).json({
                     status: 200,
-                    data: session.rows,
+                    data: session.rows[0],
+
                   });
                 }
               } else {
