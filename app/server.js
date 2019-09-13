@@ -7,7 +7,8 @@ import router from '../app/routes/routes';
 
 const app = express();
 
-//Body Parser Middleware
+//Body Parser 
+
 app.use(express.json());
 app.use(express.urlencoded({
     extended: false
