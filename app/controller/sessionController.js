@@ -96,7 +96,6 @@ class sessionController {
     try {
       const session = await pool.query(sessions.searchSessionById, [req.params.sessionId])
       const auth = await pool.query(users.checkIfMentor, [req.userData.email])
-      console.log(session.rows[0].mentorId)
             if (auth.rowCount !== 0) {
               if (auth.rows[0].id == session.rows[0].mentorId) {
                 const result = await pool.query(sessions.rejectASession, [req.params.sessionId])
