@@ -10,7 +10,7 @@ if (process.env.NODEenv === 'Test') {
     connectionString: process.env.DATABASETEST,
   });
 }
-if (process.env.NODEenv === 'Development') {
+if (process.env.NODEenv === 'production') {
   pool = new Pool({
     connectionString: process.env.DATABASEURL,
   });
