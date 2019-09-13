@@ -70,15 +70,15 @@ class sessionController {
             });
           }
         } else {
-          return res.status(400).json({
-            status: 400,
-            message: 'Can\'t accept this session',
+          return res.status(401).json({
+            status: 401,
+            error: 'Can\'t accept this session',
           });
         }
       }
       return res.status(401).json({
         status: 401,
-        message: 'Only mentor allowed',
+        error: 'Only mentor allowed',
       });
     } catch (e) {
       const error = helper.failure(e.stack, 400);
@@ -96,7 +96,6 @@ class sessionController {
     try {
       const session = await pool.query(sessions.searchSessionById, [req.params.sessionId])
       const auth = await pool.query(users.checkIfMentor, [req.userData.email])
-      console.log(session.rows[0].mentorId)
             if (auth.rowCount !== 0) {
               if (auth.rows[0].id == session.rows[0].mentorId) {
                 const result = await pool.query(sessions.rejectASession, [req.params.sessionId])
