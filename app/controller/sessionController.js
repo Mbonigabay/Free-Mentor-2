@@ -67,7 +67,6 @@ class sessionController {
             return res.status(200).json({
               status: 200,
               data: session.rows[0],
-
             });
           }
         } else {
@@ -105,9 +104,7 @@ class sessionController {
                 if (!result.error) {
                   return res.status(200).json({
                     status: 200,
-                    data: session.rows[0],
-
-                  });
+                    data: session.rows[0],});
                 }
               } else {
                 return res.status(400).json({
