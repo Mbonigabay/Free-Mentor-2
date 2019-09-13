@@ -7,18 +7,60 @@ young people to provide free mentorship sessions.
 
 ## Table of contents
 * [General info](#general-info)
+* [Features](#features)
 * [Technologies](#technologies)
-* [Additional Links](#general-info)
 * [Setup](#setup)
+* [Additional Links](#additional-links)
+* [API endpoints](#additional-links)
 
 ## General info
 Free Mentors is a social initiative where accomplished professionals become role models to
 young people to provide free mentorship sessions.
-	
+
+## Features
+* Users can sign up
+* Users can sign in
+* Admin can change a user to a mentor
+* Users can view mentors
+* Users can view a specific mentor
+* Users can create a mentorship session request with a mentor
+* A mentor can accept a mentorship session request
+* A mentor can decline a mentorship session request
+
 ## Technologies
-- HTML 5
-- CSS 3
-- JavaSCript ES6
+### Bank-End
+* Node / Express js
+* Express
+* Joi
+* ESLint
+* Travis CI
+* Coveralls
+### Front-End
+* HTML
+* CSS
+* JavaScript
+	
+## Setup
+Clone this repo from GitHub 
+
+```
+$ cd ../Free-Mentor-2
+$ yarn install
+$ yarn start
+```
+
+## Methods and paths to test API Endpoints
+| Method      | Path                                                           | Description                          |
+|-------------|----------------------------------------------------------------|--------------------------------------|
+| POST        | /api/v1/auth/signup                                            | Create User Account                  |
+| POST        | /api/v1/auth/signin                                            | User login                           |
+| PATCH       | /api/v1/user/:userId                                           | Change a user to a mentor            |
+| GET         | /api/v1/mentors                                                | Get all mentors                      |
+| GET         | /api/v1/mentors/:mentorId                                      | Get a specific mentor                |
+| POST        | /api/v1/sessions                                               | Create a mentorship session request  |
+| PATCH       | /api/v1/sessions/:sessionId/accept                             | A mentor accepts a session request   |
+| PATCH       | /api/v1/sessions/:sessionId/reject                             | A mentor rejects a session request   |
+
 
 ## Additional Links
 **Pivot tracker stories**
@@ -29,12 +71,4 @@ young people to provide free mentorship sessions.
 
 > https://documenter.getpostman.com/view/5787397/SVfWL5Rp
 
-	
-## Setup
-Clone this repo from GitHub 
 
-```
-$ cd ../Free-Mentor-2
-$ yarn install
-$ yarn start
-```
